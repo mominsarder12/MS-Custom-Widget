@@ -70,27 +70,27 @@ class My_Form_Widget extends Wp_Widget {
 
 
         echo $args['before_widget'];
-         echo $args['before_title'];
-         echo $mcw_title;
-         echo $args['after_title'];
-          if( $mcw_display_options == 'static-message'){
+        echo $args['before_title'];
+        echo $mcw_title;
+        echo $args['after_title'];
+        if ($mcw_display_options == 'static-message') {
             echo $mcw_message_field;
-          }else if( $mcw_display_options == 'recent-posts'){
+        } else if ($mcw_display_options == 'recent-posts') {
             // echo $mcw_number_of_post;
             $query = new WP_Query(array('post_type' => 'post', 'posts_per_page' => $mcw_number_of_post));
-          } 
-          if($query->have_posts()){
-            echo "<ul>";
-            while($query->have_posts()){
-              $query->the_post();
-              echo '<li><a href="'.get_permalink().'">'.get_the_title().'</a></>';
+
+            if ($query->have_posts()) {
+                echo "<ul>";
+                while ($query->have_posts()) {
+                    $query->the_post();
+                    echo '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a></>';
+                }
+                echo "<ul>";
+            } else {
+                echo 'No posts found';
             }
-            echo "<ul>";
-          }else{
-            echo 'No posts found';
-          }
-          wp_reset_postdata(  );
-        
+            wp_reset_postdata();
+        }
         echo $args['after_widget'];
     }
 }
